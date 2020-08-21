@@ -1,0 +1,3551 @@
+questionslno=1&x=Fri, 21 Aug 2020 08:31:11 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='Attacker captures the ciphertext \"cbmmppo\", he knows the encryption algorithm and find out corresponding plaintext as \"balloon\". Which type of cipher is used for encryption.'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>1</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									<div class="form-group">
+								<pre id="question1">Attacker captures the ciphertext "cbmmppo", he knows the encryption algorithm and find out corresponding plaintext as "balloon". Which type of cipher is used for encryption.</pre>  
+						
+							
+								
+								</div>
+								
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="1" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>Monoalphabetic</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>Polyalphabetic</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>None</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>Both</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>questionslno=6&x=Fri, 21 Aug 2020 08:31:17 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='/9j/4AAQSkZJRgABAQEAYABgAAD/4RDmRXhpZgAATU0AKgAAAAgABAE7AAIAAAAJAAAISodpAAQAAAABAAAIVJydAAEAAAASAAAQzOocAAcAAAgMAAAAPgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJBVkFMSUtBAAAABZADAAIAAAAUAAAQopAEAAIAAAAUAAAQtpKRAAIAAAADMzgAAJKSAAIAAAADMzgAAOocAAcAAAgMAAAIlgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIwMjA6MDg6MjAgMjI6MTE6NTMAMjAyMDowODoyMCAyMjoxMTo1MwAAAFIAQQBWAEEATABJAEsAQQAAAP/hCxtodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eHBhY2tldCBiZWdpbj0n77u/JyBpZD0nVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkJz8+DQo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIj48cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIi8+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iPjx4bXA6Q3JlYXRlRGF0ZT4yMDIwLTA4LTIwVDIyOjExOjUzLjM4MzwveG1wOkNyZWF0ZURhdGU+PC9yZGY6RGVzY3JpcHRpb24+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iPjxkYzpjcmVhdG9yPjxyZGY6U2VxIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+PHJkZjpsaT5SQVZBTElLQTwvcmRmOmxpPjwvcmRmOlNlcT4NCgkJCTwvZGM6Y3JlYXRvcj48L3JkZjpEZXNjcmlwdGlvbj48L3JkZjpSREY+PC94OnhtcG1ldGE+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIDw/eHBhY2tldCBlbmQ9J3cnPz7/2wBDAAcF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M1lZHtPPjmeNGwJNjbgreqnGCO4rhfF+lWuq/Fbwdp/hy1iivtGmN7fTwIFFta4wI2I/vngL6AnpWrq2seJPBHw3uzNZza5qdowtbGW2iaZ7lTgJLIijIKj73qV6jNc94P8AG9tpSWulaV4Q8W3Go6jeIb7UtT0xoRK7sA80j84AHRegAA4FNfFoD21NOIJr/wC0RfwajGs9voOkRm0ikG5UlmbLSAH+LaNufSm+BVGi/GTxv4fs18vT3W31KKFRhY5JFxJtHbJwafrEF34P+L8viw6fe32j6rpq2l09jbtPJbSxtlGKLlipHGQDg1d8CaTe3XjDxL4y1KzmsV1doYLK2uF2yrbxLgO6/wAJYknB5A60o7L5/n/wwS6/L8v+HO9ooooAK8n8d+HdP0/4jeBNTjWaa/uNbZHuJ5mdthjdtgycBQcYAA6V6xXj/wASvFAk8beFlstC168TRdWM95Lb6VMyKuwp8rbcP97Py56UfaXqvzB/Cz0zXvDmm+Jra2ttZt1ube3uUuRC4BR2XOAwIwRznHsK4m68NeH9Q+Kem6XpGhabaxaEg1K+mtrOONvNbKwRblGf7zkf7K128Gu29z4cfWYLe8MCxPKIZLV45mC548tgGyccDHPFYXw20q8tPDs2r63E0Wsa7cNqF4jjDRbuI4uemxAq49c01o/T+v69Aeq/r+v+HOwooopAFeefGbw7Yal8N/EGoX6zTyWunO8ETTMIonUEhwgON3uc9K9Drz34xa0IPAeraJb6bql/falYvHAllYSzLluPmdQVX6E5qZbFR3Os8N8+DdJx1+wQ/wDosV5N4UufB3hvwXpMPjXwXJbSomy71O90EGFJC5Hzylc+nPT3rvfBvic6j4GQWWk6nHf6bp8ataX1nJbF5Fj4RWdcNkrjIzjIrnfEvi688YfD+/8AD9r4T1uLXtStDbvZ3Fi6Q27sMFmnYBCq5zkHJ44rSb952Ih8KTPUY2iFurxFBCEBUqRt244x2xiuC+HcLa7r+v8AjmZT5eqSi003P/PnDlQw9nfc30xV+58L6rJ4I0fwnDdCO1FtHa6neK5EhiRAGSMer/d3dhnviustbaCytIbW0iWGCFBHHGgwqKBgAD0ApbN/1/X/AA4LWKJaKKKQwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>6</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									
+								<div class="form-group">
+								<!--  <p id="question1" th:text="${question}"></p>  -->
+								 <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4RDmRXhpZgAATU0AKgAAAAgABAE7AAIAAAAJAAAISodpAAQAAAABAAAIVJydAAEAAAASAAAQzOocAAcAAAgMAAAAPgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJBVkFMSUtBAAAABZADAAIAAAAUAAAQopAEAAIAAAAUAAAQtpKRAAIAAAADMzgAAJKSAAIAAAADMzgAAOocAAcAAAgMAAAIlgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIwMjA6MDg6MjAgMjI6MTE6NTMAMjAyMDowODoyMCAyMjoxMTo1MwAAAFIAQQBWAEEATABJAEsAQQAAAP/hCxtodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eHBhY2tldCBiZWdpbj0n77u/JyBpZD0nVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkJz8+DQo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIj48cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIi8+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iPjx4bXA6Q3JlYXRlRGF0ZT4yMDIwLTA4LTIwVDIyOjExOjUzLjM4MzwveG1wOkNyZWF0ZURhdGU+PC9yZGY6RGVzY3JpcHRpb24+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iPjxkYzpjcmVhdG9yPjxyZGY6U2VxIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+PHJkZjpsaT5SQVZBTElLQTwvcmRmOmxpPjwvcmRmOlNlcT4NCgkJCTwvZGM6Y3JlYXRvcj48L3JkZjpEZXNjcmlwdGlvbj48L3JkZjpSREY+PC94OnhtcG1ldGE+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIDw/eHBhY2tldCBlbmQ9J3cnPz7/2wBDAAcF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M1lZHtPPjmeNGwJNjbgreqnGCO4rhfF+lWuq/Fbwdp/hy1iivtGmN7fTwIFFta4wI2I/vngL6AnpWrq2seJPBHw3uzNZza5qdowtbGW2iaZ7lTgJLIijIKj73qV6jNc94P8AG9tpSWulaV4Q8W3Go6jeIb7UtT0xoRK7sA80j84AHRegAA4FNfFoD21NOIJr/wC0RfwajGs9voOkRm0ikG5UlmbLSAH+LaNufSm+BVGi/GTxv4fs18vT3W31KKFRhY5JFxJtHbJwafrEF34P+L8viw6fe32j6rpq2l09jbtPJbSxtlGKLlipHGQDg1d8CaTe3XjDxL4y1KzmsV1doYLK2uF2yrbxLgO6/wAJYknB5A60o7L5/n/wwS6/L8v+HO9ooooAK8n8d+HdP0/4jeBNTjWaa/uNbZHuJ5mdthjdtgycBQcYAA6V6xXj/wASvFAk8beFlstC168TRdWM95Lb6VMyKuwp8rbcP97Py56UfaXqvzB/Cz0zXvDmm+Jra2ttZt1ube3uUuRC4BR2XOAwIwRznHsK4m68NeH9Q+Kem6XpGhabaxaEg1K+mtrOONvNbKwRblGf7zkf7K128Gu29z4cfWYLe8MCxPKIZLV45mC548tgGyccDHPFYXw20q8tPDs2r63E0Wsa7cNqF4jjDRbuI4uemxAq49c01o/T+v69Aeq/r+v+HOwooopAFeefGbw7Yal8N/EGoX6zTyWunO8ETTMIonUEhwgON3uc9K9Drz34xa0IPAeraJb6bql/falYvHAllYSzLluPmdQVX6E5qZbFR3Os8N8+DdJx1+wQ/wDosV5N4UufB3hvwXpMPjXwXJbSomy71O90EGFJC5Hzylc+nPT3rvfBvic6j4GQWWk6nHf6bp8ataX1nJbF5Fj4RWdcNkrjIzjIrnfEvi688YfD+/8AD9r4T1uLXtStDbvZ3Fi6Q27sMFmnYBCq5zkHJ44rSb952Ih8KTPUY2iFurxFBCEBUqRt244x2xiuC+HcLa7r+v8AjmZT5eqSi003P/PnDlQw9nfc30xV+58L6rJ4I0fwnDdCO1FtHa6neK5EhiRAGSMer/d3dhnviustbaCytIbW0iWGCFBHHGgwqKBgAD0ApbN/1/X/AA4LWKJaKKKQwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z" />
+								</div>
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="6" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>KKH</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>SKK</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>KSK</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>KKS</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>questionslno=2&x=Fri, 21 Aug 2020 08:31:13 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='Which algorithm is polyalphabetic in nature'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>2</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									<div class="form-group">
+								<pre id="question1">Which algorithm is polyalphabetic in nature</pre>  
+						
+							
+								
+								</div>
+								
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="2" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>Caesar Cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>Hill cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>Multiplicative cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>Affine Cipher</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>questionslno=3&x=Fri, 21 Aug 2020 08:31:14 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='Alice and her team Manager want to communicate with each other in a securest way, for that they want to use one of the monoalphabetic substitution cipher. Suggest them best monoalphabetic substitution cipher for the secure communication.'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>3</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									<div class="form-group">
+								<pre id="question1">Alice and her team Manager want to communicate with each other in a securest way, for that they want to use one of the monoalphabetic substitution cipher. Suggest them best monoalphabetic substitution cipher for the secure communication.</pre>  
+						
+							
+								
+								</div>
+								
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="3" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>Playfair Cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>Multiplicative Cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>Affine Cipher</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>Hill Cipher</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>questionslno=4&x=Fri, 21 Aug 2020 08:31:15 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='If Rail Fence Cipher is in use then what will be ciphertext corresponding to the plaintext \"Hellohowareyou\"'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>4</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									<div class="form-group">
+								<pre id="question1">If Rail Fence Cipher is in use then what will be ciphertext corresponding to the plaintext "Hellohowareyou"</pre>  
+						
+							
+								
+								</div>
+								
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="4" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>HLOOAEOELHWRYU</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>HLUOEAOELHWRYL</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>HLUOEAOEWHLRYL</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>HLUOEAOEWHLLYR</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>questionslno=5&x=Fri, 21 Aug 2020 08:31:16 GMT&saveStatus=1<div class="container" onload="abc();">
+				<!-- Content Header (Page header) -->
+								
+				<!-- Main content -->
+				<section class="content">
+				<div class="col-md-10 col-md-offset-3"><span></span><span id="msg" style="text-align:center;color:red;"></span></div>
+				<div>
+				
+				<script>
+					/*<![CDATA[*/
+							$.unblockUI();
+						function abc(){
+	
+							$.unblockUI();
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							//alert("Please select answer!");
+							document.getElementById('msg').innerHTML = "Please select answer!";
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							//alert("You have already answered this question, you can't skip");
+							document.getElementById('msg').innerHTML = "You have already answered this question, you can't skip";
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str='Maria is communicating with her friend Jesica and attacker Eve is capturing their messages. Eve captures the ciphertext \"QEKW\" and knows that the Playfair cipher is in use and encryption key is \"bookkeeper\". Show actual plaintext recovered by the attacker Eve. X\' is used as filler letter if required'; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+				
+				</div>
+				
+
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Get Question</div>
+								<div class="panel-body" id="getQuestionBtn">
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;1&#39;);" class="col-sm-1 btn btn-primary">1</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;2&#39;);" class="col-sm-1 btn btn-primary">2</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;3&#39;);" class="col-sm-1 btn btn-primary">3</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;4&#39;);" class="col-sm-1 btn btn-primary">4</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;5&#39;);" class="col-sm-1 btn btn-primary">5</button>
+									</span>
+																	
+									<span style="width: 5px; text-align: center;">
+										<!-- <span th:text="${session.TTR}"></span> -->
+										<button type="button" style="margin-bottom: 5px; margin-right: 3px; text-align: center; width: 35px;" onclick="javascript:getQuestion(&#39;6&#39;);" class="col-sm-1 btn btn-primary">6</button>
+									</span>
+									
+
+								</div>
+							</div>
+			
+						</form>
+
+
+					</div>
+
+
+					<div class="col-md-8" id="QuestionPanel">
+						<!-- Main content -->
+						
+				
+
+
+						<form role="form" method="post" autocomplete="off">
+							<div class="panel panel-primary">
+								<div class="panel-heading panel-head-custom" style="background-color: #3c8dbc; font-size: 20px; text-align: center;">
+									Question No.<span>5</span>
+								</div>
+								<a href="" id="logout"></a>
+								<div class="panel-body">
+									<div class="form-group text-center">
+
+										<strong style="color: green; font-weight: bold;"></strong> <strong style="color: red; font-weight: bold;"></strong>
+									</div>
+									<div class="form-group">
+										<label>Question:-</label>
+									</div>
+									<div class="form-group">
+								<pre id="question1">Maria is communicating with her friend Jesica and attacker Eve is capturing their messages. Eve captures the ciphertext "QEKW" and knows that the Playfair cipher is in use and encryption key is "bookkeeper". Show actual plaintext recovered by the attacker Eve. X' is used as filler letter if required</pre>  
+						
+							
+								
+								</div>
+								
+									<div class="form-group">
+										<input type="hidden" id="questionid" name="questionid" value="5" />
+									</div>
+									<div class="form-group">
+										<label>Choices:-</label>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="A" /></td>
+												<td>
+												<h5><span>SEEN</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="B" /></td>
+												<td>
+												<h5><span>WISH</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="C" /></td>
+												<td>
+												<h5><span>DAYS</span>
+												 </h5></td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group" style="font-weight: normal;">
+										<table class="tbl tbl-responsive">
+											<tr>
+												<td style="width: 50px;"><input type="radio" id="cho" name="cho" value="D" /></td>
+												<td><h5>
+												<span>TOO</span>
+												 </h5>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="form-group text-center">
+										<div class="col-sm-6 col-md-12 ">
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="saveAnswer();" type="button">Save Answer</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="skipQuestion();" type="button">Skip this
+													question</button>
+											</div>
+											<div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block" onclick="finishExam();" type="button">Finish Exam</button>
+											</div>
+											<!-- <div class="col-md-4">
+												<button class="btn btn-md btn-primary btn-block"
+													onclick="doTimer();" type="button">timer</button>
+											</div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</section>
+				<!-- /.content -->
+				<noscript>
+					<h2 class="text-red">Enable JavasCript to Access V-TOP</h2>
+				</noscript>
+
+
+				<!-- <script th:inline="javascript">
+					/*<![CDATA[*/
+						
+						function abc(){
+	
+	
+	var str = document.getElementById('question1').value;
+
+	var res = str.split('.');
+	 
+	  
+	  var st1=str.substring(str.indexOf("$")+1);
+	  var str2=st1.split('#');
+	 
+	   
+	   for(var i=0;i<str2.length;i++)
+	   {
+	   
+	     var node = document.createElement("span");
+	    
+	  var textnode = document.createTextNode(str2[i]);
+	  node.appendChild(textnode);
+	  document.getElementById("question1").appendChild(node);
+	   
+	   }
+	
+}
+
+					function saveAnswer() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var now = new Date();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length > 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=" + cho + "&questionid="
+										+ questionid + "&opt=1&x="
+										+ now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+								}
+
+							});
+						} else {
+							alert("Please select answer!");
+							$.unblockUI();
+						}
+
+					}
+
+					function skipQuestion() {
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+
+						var now = new Date();
+
+						var cho = $("input[name=cho]:checked").val();
+
+						var questionid = $("#questionid").val();
+
+						var x = 0;
+						if ($('[name="cho"]:checked').length == 0) {
+
+							$.ajax({
+								type : "POST",
+								url : "updateAnswer",
+								data : "cho=0&questionid=" + questionid
+										+ "&opt=2&x=" + now.toUTCString(),
+								success : function(response) {
+									$.unblockUI();
+									$("#owncode").html(response);
+									
+									
+									
+								}
+
+							});
+						} else {
+							alert("You have already answered this question, you can't skip");
+							$.unblockUI();
+						}
+					}
+
+					function getQuestion(i) {
+						
+			
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "loadQuestion",
+							data : "questionslno=" + i + "&x="
+									+ now.toUTCString() + "&saveStatus=1",
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							
+								   
+								   }
+							,
+							error : function(e) {
+								alert('Error: ' + e);
+								$.unblockUI();
+								start(4);
+							}
+					});
+			 			/* var str = document.getElementById('question1').value;  */
+			var str=[[${question}]]; 
+					
+						 
+						  
+						  var st1=str.substring(str.indexOf("$")+1);
+						  var str2=st1.split('#');
+						 
+						   
+						   for(var i=0;i<str2.length;i++)
+						   {
+						   
+						     var node = document.createElement("span");
+						    
+						  var textnode = document.createTextNode(str2[i]);
+						  node.appendChild(textnode);
+						  document.getElementById("question1").appendChild(node);
+
+					}
+						}
+						
+						
+					
+
+					function finishExam() {
+						//alert("TEST");
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "fineshExam?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("#owncode").html(response);
+							}
+
+						});
+
+					}
+					
+					function doTimer() {
+					
+
+						$
+								.blockUI({
+									message : '<img src="assets/img/482.GIF"> loading... Just a moment...'
+								});
+						var now = new Date();
+						$.ajax({
+							type : "POST",
+							url : "timer?x=" + now.toUTCString(),
+							//data : ,
+							success : function(response) {
+								$.unblockUI();
+								$("timer").html(response);
+							}
+
+						});
+
+					}
+					
+					
+					
+					$(document).ready(function () {
+					
+						$.unblockUI();
+
+											    //Disable mouse right click
+					    $("body").on("contextmenu",function(e){
+					        return false;
+					    });
+					});
+				
+					
+				
+
+					/*]]>*/
+				</script>
+ -->
+				
+				
+				
+
+
+			</div>
